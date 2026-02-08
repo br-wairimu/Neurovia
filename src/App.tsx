@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { 
-  Home, 
+  Brain, 
   Users, 
-  Gamepad2, 
-  Dumbbell, 
-  TrendingUp, 
+  Sparkles, 
+  Zap, 
+  Map, 
   BookOpen, 
   Menu, 
   X,
   Bell,
   Search,
-  Heart,
   Settings
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -61,9 +60,9 @@ export default function App() {
       >
         <div className="flex flex-col h-full">
           <div className="p-6 flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-emerald-600 font-bold text-xl">
-              <Heart className="fill-emerald-600 w-8 h-8" />
-              <span>MindHaven</span>
+            <div className="flex items-center space-x-2 text-indigo-600 font-bold text-xl">
+              <Brain className="w-8 h-8" />
+              <span>Neurovia</span>
             </div>
             <button onClick={toggleSidebar} className="lg:hidden text-slate-500 hover:text-slate-700">
               <X size={24} />
@@ -71,12 +70,12 @@ export default function App() {
           </div>
 
           <nav className="flex-1 px-4 space-y-2 py-4">
-            <NavItem icon={<Home size={20} />} label="Dashboard" active={currentView === 'dashboard'} onClick={() => { setCurrentView('dashboard'); setIsSidebarOpen(false); }} />
-            <NavItem icon={<Users size={20} />} label="Find a Therapist" active={currentView === 'therapists'} onClick={() => { setCurrentView('therapists'); setIsSidebarOpen(false); }} />
-            <NavItem icon={<Gamepad2 size={20} />} label="Coping & Games" active={currentView === 'coping'} onClick={() => { setCurrentView('coping'); setIsSidebarOpen(false); }} />
-            <NavItem icon={<Dumbbell size={20} />} label="Outlets & Activity" active={currentView === 'outlets'} onClick={() => { setCurrentView('outlets'); setIsSidebarOpen(false); }} />
-            <NavItem icon={<TrendingUp size={20} />} label="My Progress" active={currentView === 'progress'} onClick={() => { setCurrentView('progress'); setIsSidebarOpen(false); }} />
-            <NavItem icon={<BookOpen size={20} />} label="Learn & Grow" active={currentView === 'learning'} onClick={() => { setCurrentView('learning'); setIsSidebarOpen(false); }} />
+            <NavItem icon={<Brain size={20} />} label="Home (Neural Map)" active={currentView === 'dashboard'} onClick={() => { setCurrentView('dashboard'); setIsSidebarOpen(false); }} />
+            <NavItem icon={<Users size={20} />} label="Connect (Therapy)" active={currentView === 'therapists'} onClick={() => { setCurrentView('therapists'); setIsSidebarOpen(false); }} />
+            <NavItem icon={<Sparkles size={20} />} label="Regulate (Tools)" active={currentView === 'coping'} onClick={() => { setCurrentView('coping'); setIsSidebarOpen(false); }} />
+            <NavItem icon={<Zap size={20} />} label="Release (Outlets)" active={currentView === 'outlets'} onClick={() => { setCurrentView('outlets'); setIsSidebarOpen(false); }} />
+            <NavItem icon={<Map size={20} />} label="Path (Progress)" active={currentView === 'progress'} onClick={() => { setCurrentView('progress'); setIsSidebarOpen(false); }} />
+            <NavItem icon={<BookOpen size={20} />} label="Learn" active={currentView === 'learning'} onClick={() => { setCurrentView('learning'); setIsSidebarOpen(false); }} />
           </nav>
 
           <div className="p-4 border-t border-slate-200">
@@ -104,7 +103,7 @@ export default function App() {
             <Search size={18} className="text-slate-400" />
             <input 
               type="text" 
-              placeholder="Search for therapists, activities, or articles..." 
+              placeholder="Type to search..." 
               className="bg-transparent border-none outline-none text-sm w-full placeholder-slate-500"
             />
           </div>
@@ -112,7 +111,7 @@ export default function App() {
           <div className="flex items-center space-x-4">
             <button className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
               <Bell size={20} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-indigo-500 rounded-full border-2 border-white"></span>
             </button>
           </div>
         </header>
@@ -144,11 +143,11 @@ function NavItem({ icon, label, active, onClick }: { icon: React.ReactNode, labe
       onClick={onClick}
       className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200
         ${active 
-          ? 'bg-emerald-50 text-emerald-700' 
+          ? 'bg-indigo-50 text-indigo-700' 
           : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
         }`}
     >
-      <span className={active ? 'text-emerald-600' : 'text-slate-400'}>{icon}</span>
+      <span className={active ? 'text-indigo-600' : 'text-slate-400'}>{icon}</span>
       <span>{label}</span>
     </button>
   );

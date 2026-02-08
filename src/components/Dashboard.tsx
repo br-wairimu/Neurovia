@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Activity, Calendar, Award, Book } from 'lucide-react';
+import { ArrowRight, Activity, Zap, Wind, BookOpen } from 'lucide-react';
 import { View } from '../types';
 
 interface DashboardProps {
@@ -8,171 +8,160 @@ interface DashboardProps {
 }
 
 export function Dashboard({ onChangeView }: DashboardProps) {
+  const [mood, setMood] = useState<number | null>(null);
+
   return (
-    <div className="space-y-8">
-      {/* Welcome Section */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 p-8 text-white shadow-lg">
-        <div className="relative z-10 max-w-2xl">
-          <h1 className="text-3xl font-bold mb-2">Good Morning, Alex</h1>
-          <p className="text-emerald-100 text-lg mb-6">
-            "The journey of a thousand miles begins with a single step." Take a moment for yourself today.
-          </p>
-          <div className="flex space-x-4">
-            <button 
-              onClick={() => onChangeView('therapists')}
-              className="px-5 py-2.5 bg-white text-emerald-700 font-semibold rounded-lg shadow-sm hover:bg-emerald-50 transition-colors"
-            >
-              Find Support
-            </button>
-            <button 
-              onClick={() => onChangeView('coping')}
-              className="px-5 py-2.5 bg-emerald-700/50 text-white font-semibold rounded-lg backdrop-blur-sm hover:bg-emerald-700/70 transition-colors"
-            >
-              Quick Relief
-            </button>
-          </div>
-        </div>
-        
-        {/* Abstract shapes */}
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-20 -mb-10 w-40 h-40 bg-teal-400/20 rounded-full blur-2xl"></div>
-      </div>
-
-      {/* Quick Stats/Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard 
-          icon={<Activity className="text-rose-500" />}
-          title="Mood Check-in"
-          value="Stable"
-          subtext="+2 days streak"
-          color="bg-rose-50"
-          onClick={() => onChangeView('progress')}
-        />
-        <StatCard 
-          icon={<Calendar className="text-indigo-500" />}
-          title="Next Session"
-          value="Tomorrow, 2 PM"
-          subtext="Dr. Sarah Chen"
-          color="bg-indigo-50"
-          onClick={() => onChangeView('therapists')}
-        />
-        <StatCard 
-          icon={<Award className="text-amber-500" />}
-          title="Goals Met"
-          value="12/15"
-          subtext="Keep it up!"
-          color="bg-amber-50"
-          onClick={() => onChangeView('learning')}
-        />
-        <StatCard 
-          icon={<Book className="text-blue-500" />}
-          title="Daily Read"
-          value="Mindfulness"
-          subtext="5 min read"
-          color="bg-blue-50"
-          onClick={() => onChangeView('learning')}
-        />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Recommended Activities */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-slate-800">Recommended for You</h2>
-            <button onClick={() => onChangeView('outlets')} className="text-emerald-600 text-sm font-medium hover:underline flex items-center">
-              View all <ArrowRight size={16} className="ml-1" />
-            </button>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ActivityCard 
-              image="https://images.unsplash.com/photo-1618425977996-bebc5afe88f9?auto=format&fit=crop&q=80&w=600&h=400"
-              title="Sunset Yoga"
-              category="Meditation"
-              duration="45 min"
-              action="Book Session"
-            />
-            <ActivityCard 
-              image="https://images.unsplash.com/photo-1761873763418-2c9596bc8c65?auto=format&fit=crop&q=80&w=600&h=400"
-              title="Stress Relief Axe Throwing"
-              category="Physical Outlet"
-              duration="60 min"
-              action="Reserve Spot"
-            />
-          </div>
+    <div className="space-y-12">
+      {/* Neural Map Visualization & Check-in */}
+      <div className="relative min-h-[400px] flex flex-col items-center justify-center py-12">
+        {/* Background Neural Network Animation */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+          <NeuralNetworkAnimation />
         </div>
 
-        {/* Daily Affirmation / Mini-game teaser */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
-          <div>
-            <h3 className="text-lg font-bold text-slate-800 mb-4">Daily Breath</h3>
-            <p className="text-slate-600 mb-6">Take a moment to center yourself. Follow the circle.</p>
-            <div className="flex justify-center py-8">
-              <motion.div 
-                animate={{ 
-                  scale: [1, 1.5, 1],
-                  opacity: [0.5, 1, 0.5]
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="w-24 h-24 bg-emerald-400/30 rounded-full flex items-center justify-center backdrop-blur-sm"
-              >
-                <div className="w-12 h-12 bg-emerald-500 rounded-full shadow-lg"></div>
-              </motion.div>
+        <div className="relative z-10 w-full max-w-2xl text-center space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-4xl font-light text-slate-800 mb-2">How is your brain today?</h1>
+            <p className="text-slate-500">No judgment. Just checking in.</p>
+          </motion.div>
+
+          <div className="space-y-6">
+            <div className="flex justify-center gap-4">
+              {[1, 2, 3, 4, 5].map((level) => (
+                <button
+                  key={level}
+                  onClick={() => setMood(level)}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-300 ${
+                    mood === level
+                      ? 'bg-indigo-600 text-white shadow-lg scale-110'
+                      : 'bg-white text-slate-400 border border-slate-200 hover:border-indigo-300 hover:text-indigo-500'
+                  }`}
+                >
+                  {level}
+                </button>
+              ))}
+            </div>
+            <div className="flex justify-between w-full max-w-xs mx-auto text-xs text-slate-400 uppercase tracking-wider">
+              <span>Overwhelmed</span>
+              <span>Balanced</span>
             </div>
           </div>
-          <button 
-            onClick={() => onChangeView('coping')}
-            className="w-full py-2 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 transition-colors"
-          >
-            Start Exercise
-          </button>
+
+          {mood !== null && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8 text-left"
+            >
+              <SuggestionCard
+                icon={<Activity className="text-indigo-500" />}
+                title="Talk to someone"
+                desc="Connect with a therapist who understands."
+                onClick={() => onChangeView('therapists')}
+              />
+              <SuggestionCard
+                icon={<Zap className="text-amber-500" />}
+                title="Release energy"
+                desc="Physical outlets to channel emotions."
+                onClick={() => onChangeView('outlets')}
+              />
+              <SuggestionCard
+                icon={<Wind className="text-emerald-500" />}
+                title="Ground your body"
+                desc="Calming games and breathing."
+                onClick={() => onChangeView('coping')}
+              />
+              <SuggestionCard
+                icon={<BookOpen className="text-blue-500" />}
+                title="Learn something"
+                desc="Articles to support your journey."
+                onClick={() => onChangeView('learning')}
+              />
+            </motion.div>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-function StatCard({ icon, title, value, subtext, color, onClick }: any) {
+function SuggestionCard({ icon, title, desc, onClick }: any) {
   return (
-    <motion.button 
-      whileHover={{ y: -2 }}
+    <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 text-left w-full hover:shadow-md transition-all"
+      className="flex items-start p-4 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-xl hover:bg-white hover:shadow-md transition-all text-left"
     >
-      <div className={`w-10 h-10 rounded-full ${color} flex items-center justify-center mb-4`}>
+      <div className="p-2 bg-slate-50 rounded-lg mr-4">
         {icon}
       </div>
-      <p className="text-sm text-slate-500 font-medium mb-1">{title}</p>
-      <h3 className="text-xl font-bold text-slate-900 mb-1">{value}</h3>
-      <p className="text-xs text-emerald-600 font-medium">{subtext}</p>
+      <div>
+        <h3 className="font-semibold text-slate-800">{title}</h3>
+        <p className="text-sm text-slate-500">{desc}</p>
+      </div>
     </motion.button>
   );
 }
 
-function ActivityCard({ image, title, category, duration, action }: any) {
+function NeuralNetworkAnimation() {
+  // Simple node visualization using SVG
+  const nodes = Array.from({ length: 15 }).map((_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    r: Math.random() * 2 + 1,
+  }));
+
   return (
-    <div className="group relative overflow-hidden rounded-xl bg-white shadow-sm border border-slate-200 hover:shadow-md transition-all">
-      <div className="aspect-video w-full overflow-hidden">
-        <img 
-          src={image} 
-          alt={title} 
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-      </div>
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">{category}</span>
-          <span className="text-xs text-slate-500 flex items-center"><Activity size={12} className="mr-1" /> {duration}</span>
-        </div>
-        <h3 className="font-bold text-slate-900 mb-1">{title}</h3>
-        <button className="mt-3 w-full py-2 bg-slate-900 text-white text-sm font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
-          {action}
-        </button>
-      </div>
-    </div>
+    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+      {nodes.map((node, i) => (
+        <React.Fragment key={i}>
+          <motion.circle
+            cx={node.x}
+            cy={node.y}
+            r={node.r}
+            className="fill-indigo-200"
+            animate={{
+              cx: [node.x, node.x + (Math.random() * 10 - 5), node.x],
+              cy: [node.y, node.y + (Math.random() * 10 - 5), node.y],
+              opacity: [0.3, 0.6, 0.3]
+            }}
+            transition={{
+              duration: 5 + Math.random() * 5,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          {nodes.slice(i + 1, i + 3).map((target, j) => (
+             <motion.line
+               key={j}
+               x1={node.x}
+               y1={node.y}
+               x2={target.x}
+               y2={target.y}
+               stroke="currentColor"
+               strokeWidth="0.1"
+               className="text-indigo-100"
+               animate={{
+                 x1: [node.x, node.x + (Math.random() * 10 - 5), node.x],
+                 y1: [node.y, node.y + (Math.random() * 10 - 5), node.y],
+                 x2: [target.x, target.x + (Math.random() * 10 - 5), target.x],
+                 y2: [target.y, target.y + (Math.random() * 10 - 5), target.y],
+               }}
+               transition={{
+                 duration: 5 + Math.random() * 5,
+                 repeat: Infinity,
+                 ease: "easeInOut"
+               }}
+             />
+          ))}
+        </React.Fragment>
+      ))}
+    </svg>
   );
 }
