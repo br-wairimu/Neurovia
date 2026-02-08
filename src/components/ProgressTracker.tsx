@@ -1,130 +1,178 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Trophy, Calendar, CheckCircle, Star, ArrowRight } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { Trophy, Calendar, CheckCircle, Star, ArrowRight, Medal, Crown } from 'lucide-react';
+
+const MOOD_DATA = [
+  { day: 'M', mood: 3 },
+  { day: 'T', mood: 4 },
+  { day: 'W', mood: 3 },
+  { day: 'T', mood: 5 },
+  { day: 'F', mood: 4 },
+  { day: 'S', mood: 5 },
+  { day: 'S', mood: 5 },
+];
 
 export function ProgressTracker() {
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-slate-900">Path</h2>
-        <p className="text-slate-500">Your journey isn't linear. Progress means simply showing up.</p>
+    <div className="py-8 max-w-5xl mx-auto space-y-16">
+      <div className="text-center space-y-4">
+        <h2 className="text-4xl font-serif text-slate-800 tracking-tight">Path</h2>
+        <p className="text-slate-500 font-light text-lg">Your journey in waves, not lines.</p>
       </div>
 
-      {/* Path Visualization */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
-        <h3 className="text-lg font-bold text-slate-800 mb-8 flex items-center">
-          <Calendar className="mr-2 text-indigo-500" /> Recent Journey
-        </h3>
-        
-        <div className="relative">
-          {/* Vertical Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-slate-100"></div>
-
-          <div className="space-y-8 relative">
-            <TimelineItem 
-              date="Today"
-              title="Daily Check-in"
-              desc="You acknowledged your feelings."
-              icon={<CheckCircle size={20} />}
-              status="completed"
-            />
-            <TimelineItem 
-              date="Yesterday"
-              title="Therapy Session"
-              desc="Attended session with Dr. Chen"
-              icon={<Star size={20} />}
-              status="completed"
-            />
-            <TimelineItem 
-              date="Feb 6"
-              title="Breathing Exercise"
-              desc="Completed 5 min calm session"
-              icon={<CheckCircle size={20} />}
-              status="completed"
-            />
-            <TimelineItem 
-              date="Feb 4"
-              title="Wreck Room"
-              desc="Release session"
-              icon={<Star size={20} />}
-              status="completed"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Achievements / Milestones */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-2xl p-8 text-white">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold flex items-center">
-              <Trophy className="mr-2 text-yellow-400" /> Milestones
-            </h3>
-          </div>
-          <div className="space-y-4">
-            <Milestone title="First Step" desc="Completed your first check-in" progress={100} />
-            <Milestone title="Consistent Care" desc="Logged in 3 days this week" progress={60} />
-            <Milestone title="Explorer" desc="Tried 3 different coping tools" progress={33} />
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-8 border border-slate-200 flex flex-col justify-between">
-          <div>
-            <h3 className="text-xl font-bold text-slate-800 mb-2">Next on Your Path</h3>
-            <p className="text-slate-500 mb-6">Based on your recent check-ins, we recommend:</p>
-            
-            <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-100 mb-4">
-              <h4 className="font-bold text-indigo-900">Understanding Triggers</h4>
-              <p className="text-sm text-indigo-700 mt-1">A short article on identifying what starts the cycle.</p>
-            </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {/* Mood Graph */}
+        <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+          <div className="flex items-center justify-between mb-8">
+             <h3 className="font-serif text-2xl text-slate-800">Rhythm</h3>
+             <span className="text-xs font-medium tracking-widest uppercase text-slate-400">Weekly Flow</span>
           </div>
           
-          <button className="w-full py-3 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors flex items-center justify-center">
-            Start Learning <ArrowRight size={16} className="ml-2" />
-          </button>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={MOOD_DATA}>
+                <defs>
+                  <linearGradient id="colorMood" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#2DD4BF" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="#2DD4BF" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <XAxis 
+                  dataKey="day" 
+                  stroke="#94a3b8" 
+                  fontSize={12} 
+                  tickLine={false} 
+                  axisLine={false} 
+                  dy={10}
+                />
+                <YAxis hide domain={[0, 6]} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#fff', 
+                    borderRadius: '12px', 
+                    border: 'none',
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                  }}
+                  cursor={{ stroke: '#cbd5e1', strokeDasharray: '4 4' }}
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="mood" 
+                  stroke="#2DD4BF" 
+                  strokeWidth={2} 
+                  fillOpacity={1} 
+                  fill="url(#colorMood)" 
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
         </div>
+
+        {/* Timeline */}
+        <div className="relative py-4 pl-4">
+           {/* Timeline Line */}
+           <div className="absolute top-4 bottom-4 left-[27px] w-px bg-slate-200" />
+           
+           <div className="space-y-12">
+              <TimelineItem 
+                title="You showed up"
+                date="Today"
+                desc="Checked in with your feelings."
+                active
+              />
+              <TimelineItem 
+                title="You paused"
+                date="Yesterday"
+                desc="Completed 5 min breathing."
+              />
+              <TimelineItem 
+                title="You connected"
+                date="Feb 6"
+                desc="Scheduled session with Dr. Chen."
+              />
+           </div>
+        </div>
+      </div>
+
+      {/* Rewards & Achievements */}
+      <div className="bg-[#0F172A] rounded-3xl p-8 md:p-12 text-slate-300 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        
+        <div className="relative z-10">
+          <div className="flex items-end justify-between mb-12">
+            <div>
+              <h3 className="text-3xl font-serif text-white mb-2">Milestones</h3>
+              <p className="text-slate-400 font-light">Small victories worth celebrating.</p>
+            </div>
+            <div className="text-amber-400 flex items-center gap-2 bg-amber-400/10 px-4 py-2 rounded-full border border-amber-400/20">
+              <Crown size={16} />
+              <span className="text-xs font-bold tracking-widest uppercase">Level 3</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <RewardCard 
+              icon={<Star size={24} />}
+              title="First Light"
+              desc="Completed your first check-in."
+              earned
+            />
+            <RewardCard 
+              icon={<Medal size={24} />}
+              title="Steady Heart"
+              desc="3-day streak of calm."
+              earned
+            />
+            <RewardCard 
+              icon={<Trophy size={24} />}
+              title="Explorer"
+              desc="Tried all regulation tools."
+              earned={false}
+            />
+          </div>
+        </div>
+      </div>
+      
+      <div className="text-center pt-8">
+         <p className="text-slate-400 font-serif italic text-lg">"Progress is quiet."</p>
       </div>
     </div>
   );
 }
 
-function TimelineItem({ date, title, desc, icon, status }: any) {
+function TimelineItem({ title, date, desc, active }: any) {
   return (
     <motion.div 
-      initial={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
-      className="flex items-start pl-2"
+      className="relative flex items-start gap-6"
     >
-      <div className="flex flex-col items-center mr-6 z-10 bg-white">
-        <div className={`w-12 h-12 rounded-full border-4 border-white shadow-sm flex items-center justify-center ${
-          status === 'completed' ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 text-slate-400'
-        }`}>
-          {icon}
-        </div>
+      <div className={`relative z-10 w-14 h-14 rounded-full border-4 border-[#FDFBF7] flex items-center justify-center shadow-sm transition-colors duration-500 ${active ? 'bg-emerald-50 text-emerald-600' : 'bg-white text-slate-300'}`}>
+        <CheckCircle size={20} />
       </div>
-      <div className="pt-2 pb-6">
-        <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">{date}</span>
-        <h4 className="text-lg font-bold text-slate-900">{title}</h4>
-        <p className="text-slate-500">{desc}</p>
+      <div className="pt-2">
+        <span className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1 block">{date}</span>
+        <h4 className="text-lg font-serif text-slate-800">{title}</h4>
+        <p className="text-slate-500 font-light text-sm">{desc}</p>
       </div>
     </motion.div>
   );
 }
 
-function Milestone({ title, desc, progress }: any) {
+function RewardCard({ icon, title, desc, earned }: any) {
   return (
-    <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm border border-white/10">
-      <div className="flex justify-between items-center mb-2">
-        <h4 className="font-bold text-sm">{title}</h4>
-        {progress === 100 && <CheckCircle size={16} className="text-emerald-400" />}
+    <div className={`p-6 rounded-2xl border transition-all duration-500 ${earned ? 'bg-white/5 border-white/10' : 'bg-transparent border-white/5 opacity-50'}`}>
+      <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 ${earned ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-800 text-slate-600'}`}>
+        {icon}
       </div>
-      <p className="text-xs text-indigo-200 mb-3">{desc}</p>
-      <div className="w-full bg-black/20 h-1.5 rounded-full overflow-hidden">
-        <div 
-          className={`h-full rounded-full transition-all duration-1000 ${progress === 100 ? 'bg-emerald-400' : 'bg-indigo-400'}`} 
-          style={{ width: `${progress}%` }}
-        ></div>
-      </div>
+      <h4 className="text-white font-serif text-lg mb-1">{title}</h4>
+      <p className="text-slate-400 text-sm font-light">{desc}</p>
+      {earned && (
+        <div className="mt-4 h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+          <div className="h-full bg-amber-400 w-full" />
+        </div>
+      )}
     </div>
   );
 }
