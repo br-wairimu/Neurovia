@@ -29,9 +29,9 @@ export function ProgressTracker() {
              <span className="text-xs font-medium tracking-widest uppercase text-slate-400">Weekly Flow</span>
           </div>
           
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={MOOD_DATA}>
+          <div className="h-64 w-full min-h-[250px]">
+            <ResponsiveContainer width="100%" height={250}>
+              <AreaChart data={MOOD_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorMood" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#2DD4BF" stopOpacity={0.2}/>

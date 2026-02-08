@@ -673,6 +673,10 @@
     min-height: 70vh;
   }
 
+  .min-h-\[250px\] {
+    min-height: 250px;
+  }
+
   .min-h-full {
     min-height: 100%;
   }
